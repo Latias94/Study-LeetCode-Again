@@ -34,7 +34,7 @@ using System;
  *     public ListNode(int x) { val = x; }
  * }
  */
-public class Solution
+public class Solution0024
 {
     public ListNode SwapPairs(ListNode head)
     {
