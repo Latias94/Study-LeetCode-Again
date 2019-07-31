@@ -10,3 +10,4 @@ vscode 插件：
 * C#
 * C# FixFormat
 * Auto-Using for C#
+* LeetCode
