@@ -53,4 +53,15 @@ public class Solution0024
         }
         return pre.next;
     }
+
+    // 递归
+    public ListNode SwapPairs1(ListNode head)
+    {
+        if (head == null || head.next == null) return head;
+        ListNode newHead = head.next;
+        ListNode temp = newHead.next;
+        newHead.next = head;
+        newHead.next.next = SwapPairs(temp);
+        return newHead;
+    }
 }

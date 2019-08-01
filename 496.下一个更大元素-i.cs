@@ -47,7 +47,7 @@ using System.Collections.Generic;
  * 
  * 
  */
-public class Solution
+public class Solution0496
 {
     public int[] NextGreaterElement(int[] nums1, int[] nums2)
     {
