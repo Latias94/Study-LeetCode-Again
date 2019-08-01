@@ -55,7 +55,7 @@ using System.Collections.Generic;
  * 输出: true
  * 
  */
-public class Solution
+public class Solution0020
 {
     public bool IsValid(string s)
     {

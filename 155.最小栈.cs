@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 /*
  * @lc app=leetcode.cn id=155 lang=csharp
  *
@@ -39,36 +39,36 @@ using System.Collections;
 public class MinStack
 {
     /** initialize your data structure here. */
-    Stack stack, minStack;
+    Stack<int> stack, minStack;
 
     public MinStack()
     {
-        stack = new Stack();
-        minStack = new Stack();
+        stack = new Stack<int>();
+        minStack = new Stack<int>();
     }
 
     public void Push(int x)
     {
         stack.Push(x);
-        if (minStack.Count == 0 || x <= (int) minStack.Peek())
+        if (minStack.Count == 0 || x <= minStack.Peek())
             minStack.Push(x);
     }
 
     public void Pop()
     {
-        int num = (int) stack.Pop();
-        if (num == (int) minStack.Peek())
+        int num = stack.Pop();
+        if (num == minStack.Peek())
             minStack.Pop();
     }
 
     public int Top()
     {
-        return (int) stack.Peek();
+        return stack.Peek();
     }
 
     public int GetMin()
     {
-        return (int) minStack.Peek();
+        return minStack.Peek();
     }
 }
 
