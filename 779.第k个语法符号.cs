@@ -50,7 +50,7 @@ using System.Linq;
  * 
  * 
  */
-public class Solution
+public class Solution0779
 {
     // 序号
     //              1
