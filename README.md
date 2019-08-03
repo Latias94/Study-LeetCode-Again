@@ -76,7 +76,7 @@ public int Search(int[] nums, int target)
 
 ## 二分查找变形
 
-![](imgs\binary-search.png)
+![](imgs/binary-search.png)
 
 ### 变体一：查找第一个值等于给定值的元素
 
@@ -167,7 +167,7 @@ public int Search(int[] nums, int target)
 
 ## LeetCode 模板
 
-![](imgs\binary-search-leetcode.png)
+![](imgs/binary-search-leetcode.png)
 
 这 3 个模板的不同之处在于：
 
