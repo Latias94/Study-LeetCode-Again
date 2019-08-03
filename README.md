@@ -101,7 +101,7 @@ public int Search(int[] nums, int target)
         }
         else
         {   // 如果当前不是想要的值，就继续在前面的部分里找
-                        if ((mid == 0) || (nums[mid - 1] != value)) return mid;
+            if ((mid == 0) || (nums[mid - 1] != value)) return mid;
             else high = mid - 1;
         }
     }
@@ -128,7 +128,7 @@ public int Search(int[] nums, int target)
         }
         else
         {   // 和变体一相比，只改了下面两行，在后半部分寻找
-                        if ((mid == nums.Length - 1) || (nums[mid + 1] != value)) return mid;
+            if ((mid == nums.Length - 1) || (nums[mid + 1] != value)) return mid;
             else low = mid + 1;
         }
     }
@@ -147,13 +147,13 @@ public int Search(int[] nums, int target)
         int mid = ((high - low) >> 1) + low;
         if (nums[mid] >= target)
         {
-                        if ((mid == 0) || (nums[mid - 1] < target)) return mid;
+            if ((mid == 0) || (nums[mid - 1] < target)) return mid;
             high = mid - 1;
         } 
-                else 
-                { // nums[mid] < target
-                        low = mid + 1;
-                }
+        else 
+        { // nums[mid] < target
+            low = mid + 1;
+        }
     }
     return -1;
 }
