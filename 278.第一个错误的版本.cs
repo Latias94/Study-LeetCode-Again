@@ -34,20 +34,20 @@
  */
 /* The isBadVersion API is defined in the parent class VersionControl.
       bool IsBadVersion(int version); */
-
+// 二分查找的一种辩题
 public class Solution0278 : VersionControl
 {
     public int FirstBadVersion(int n)
     {
-        int low = 0, high = n;
-        while (low < high)
+        int low = 0, high = n - 1;
+        while (low <= high)
         {
             int mid = ((high - low) >> 1) + low;
             if (IsBadVersion(mid))
             {
-                if (!IsBadVersion(mid - 1))
+                if (mid == 0 || !IsBadVersion(mid - 1))
                     return mid;
-                high = mid;
+                high = mid - 1;
             }
             else
             {
