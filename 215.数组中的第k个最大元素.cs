@@ -1,125 +1,52 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 /*
- * @lc app=leetcode.cn id=347 lang=csharp
+ * @lc app=leetcode.cn id=215 lang=csharp
  *
- * [347] 前 K 个高频元素
+ * [215] 数组中的第K个最大元素
  *
- * https://leetcode-cn.com/problems/top-k-frequent-elements/description/
+ * https://leetcode-cn.com/problems/kth-largest-element-in-an-array/description/
  *
  * algorithms
- * Medium (57.47%)
- * Likes:    144
+ * Medium (57.83%)
+ * Likes:    222
  * Dislikes: 0
- * Total Accepted:    16.9K
- * Total Submissions: 29.3K
- * Testcase Example:  '[1,1,1,2,2,3]\n2'
+ * Total Accepted:    36.3K
+ * Total Submissions: 62.8K
+ * Testcase Example:  '[3,2,1,5,6,4]\n2'
  *
- * 给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
+ * 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  * 
  * 示例 1:
  * 
- * 输入: nums = [1,1,1,2,2,3], k = 2
- * 输出: [1,2]
+ * 输入: [3,2,1,5,6,4] 和 k = 2
+ * 输出: 5
  * 
  * 
- * 示例 2:
+ * 示例 2:
  * 
- * 输入: nums = [1], k = 1
- * 输出: [1]
+ * 输入: [3,2,3,1,2,4,5,5,6] 和 k = 4
+ * 输出: 4
  * 
- * 说明：
+ * 说明: 
  * 
- * 
- * 你可以假设给定的 k 总是合理的，且 1 ≤ k ≤ 数组中不相同的元素的个数。
- * 你的算法的时间复杂度必须优于 O(n log n) , n 是数组的大小。
- * 
+ * 你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。
  * 
  */
-public class Solution0347
+public class Solution0215
 {
-    // 执行用时 :384 ms, 在所有 C# 提交中击败了 97.56% 的用户
-    // topK 问题可以用优先队列（最大堆、最小堆）实现，本题用的最小堆的实现在最下面
-    // 求 TopK，可以先将前 K 个元素拿来初始化（heapify）,再将后面的元素一个一个和堆顶（最小堆的最小值）比较，
-    // 如果元素更大，则将堆顶移除，再插入元素。比堆顶小就不需要插入，因为这个元素比最小值还小
-    // 最后留在堆中的就是前 k 个高频元素，但是堆顶是第 k 个高频元素，所以最后还要逆序输出
-    public IList<int> TopKFrequent(int[] nums, int k)
+    public int FindKthLargest(int[] nums, int k)
     {
-        Dictionary<int, int> dict = new Dictionary<int, int>();
-        foreach (var num in nums)
+        MinHeap<int> minHeap = new MinHeap<int>(Slice(nums, 0, k));
+        for (int i = k; i < nums.Length; i++)
         {
-            AddOrUpdateKey(dict, num);
-        }
-        Num[] numArray = new Num[dict.Count];
-        int index = 0;
-        foreach (KeyValuePair<int, int> pair in dict)
-        {
-            numArray[index++] = new Num(pair.Key, pair.Value);
-        }
-
-        // Heapify
-        MinHeap<Num> minHeap = new MinHeap<Num>(Slice(numArray, 0, k));
-        for (int i = k; i < numArray.Length; i++)
-        {
-            if (numArray[i].CompareTo(minHeap.GetMin()) > 0)
+            if (nums[i] > minHeap.GetMin())
             {
                 minHeap.ExtractMin();
-                minHeap.Insert(numArray[i]);
+                minHeap.Insert(nums[i]);
             }
         }
-
-        IList<int> results = new List<int>(k);
-        for (int i = 0; i < k; i++)
-        {
-            // 如果要求结果从大到小排列，逆序插值即可。小到大排列则直接 Add
-            results.Insert(0, minHeap.ExtractMin().Value);
-
-            // 本题结果不要求按频率排序，因此可以忽略顺序，直接从堆中的数组取值
-            results.Add(minHeap.data.Get(i).Value);
-        }
-
-        return results;
-    }
-
-    private void AddOrUpdateKey(Dictionary<int, int> dict, int key)
-    {
-        if (dict.ContainsKey(key))
-        {
-            dict[key]++;
-        }
-        else
-        {
-            dict.Add(key, 1);
-        }
-    }
-
-    // 支持比较的数据结构，用在最小堆的泛型中
-    public class Num : IComparable
-    {
-        public int Value;
-        public int Count;
-        public Num(int value, int count)
-        {
-            this.Value = value;
-            this.Count = count;
-        }
-        public int CompareTo(object otherNum)
-        {
-            if (otherNum != null)
-            {
-                return Count.CompareTo(((Num) otherNum).Count);
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
-        public override string ToString()
-        {
-            return "Value: " + Value + ", Count: " + Count;
-        }
+        return minHeap.GetMin();
     }
 
     public T[] Slice<T>(T[] arr, int indexFrom, int indexTo)
