@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * @lc app=leetcode.cn id=347 lang=csharp
@@ -39,7 +40,8 @@ using System.Text;
  */
 public class Solution0347
 {
-    // 最小堆的实现在最下面
+    // 执行用时 :384 ms, 在所有 C# 提交中击败了 97.56% 的用户
+    // topK 问题可以用优先队列（最大堆、最小堆）实现，本题用的最小堆的实现在最下面
     // 求 TopK，可以先将前 K 个元素拿来初始化（heapify）,再将后面的元素一个一个和堆顶（最小堆的最小值）比较，
     // 如果元素更大，则将堆顶移除，再插入元素。比堆顶小就不需要插入，因为这个元素比最小值还小
     // 最后留在堆中的就是前 k 个高频元素，但是堆顶是第 k 个高频元素，所以最后还要逆序输出
@@ -68,17 +70,16 @@ public class Solution0347
             }
         }
 
-        Stack<int> stack = new Stack<int>(k);
-        while (!minHeap.IsEmpty())
-        {
-            int num = minHeap.ExtractMin().Value;
-            stack.Push(num);
-        }
         IList<int> results = new List<int>(k);
-        while (stack.Count > 0)
-        {
-            results.Add(stack.Pop());
+        for (int i = 0; i < k; i++)
+        {   // 堆中的数组（自己实现的动态数组）数据也是从小到大排列的（最小堆的最小值在最前面）
+            // 因此逆序插值即可，这样 results 列表就是从大到小排列
+            // results.Insert(0, minHeap.data.Get(i).Value);
+
+            // 本题结果不要求按频率排序，因此可以忽略顺序
+            results.Add(minHeap.data.Get(i).Value);
         }
+
         return results;
     }
 
@@ -93,7 +94,7 @@ public class Solution0347
             dict.Add(key, 1);
         }
     }
-    
+
     // 支持比较的数据结构，用在最小堆的泛型中
     public class Num : IComparable
     {
@@ -142,7 +143,7 @@ public class Solution0347
     /// </summary>
     public class MinHeap<T> where T : IComparable
     {
-        private Array<T> data;
+        public Array<T> data;
 
         public MinHeap(int capacity)
         {
